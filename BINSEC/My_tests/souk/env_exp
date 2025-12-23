@@ -1,2 +1,1 @@
-export SOUK_PATH=$(pwd)../../binsec/examples/sse/fcsc/2022.souk
-export BINSEC_EXE=$(pwd)../../binsec/_build/default/src/main.exe
+export SOUK_PATH=$(pwd)/../../binsec/examples/sse/fcsc/2022.souk
